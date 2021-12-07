@@ -1,47 +1,30 @@
-import { useEffect, useState, useLayoutEffect } from 'react';
-
-//Demo Mounted & Unmounted 
-//Demo useEffect
+import { useRef, useState } from 'react';
 
 
-/**
- * useEffect
- * 1. cập nhật lại state
- * 2. cập nhật lại DOM (mutated)
- * 3. render lại UI
- * 4. gọi cleanup nếu deps thay đổi
- * 5. gọi useEffect callback
- * 
- * useLayoutEffect
- * 1. cập nhật lại state
- * 2. cập nhật DOM (mutated)
- * 3. gọi cleanup nếu deps thay đổi (sync)
- * 4. gọi useLayoutEffect callback (sync)
- * 5. render lại UI  
- * 
- */
+// Lưu các giá trị qua một tham chiếu bên ngoài
+// function component
+// let timerId;
 
 function Content() {
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(60);
 
-    const handleRun = () => {
-        setCount(count+1)
+    const timerId = useRef(99);
+
+    const handleStart = () => {
+        timerId.current = setInterval(() => {
+            setCount(prevCount => setCount(prevCount-1))
+        }, 1000)
     }
 
-    // dùng useEfect
-    // useEffect(() => {
-    //     if(count>3) setCount(0);
-    // }, [count])
-    
-    //fix
-    useLayoutEffect(() => {
-        if(count>3) setCount(0);
-    }, [count])
+    const handleStop = () => {
+        clearInterval(timerId.current);
+    }
 
     return (
         <div>
             <h1>{count}</h1>
-            <button onClick={handleRun}>Run</button>
+            <button onClick={handleStart}>Start</button>
+            <button onClick={handleStop}>Stop</button>
         </div>
     )
 }
