@@ -28,47 +28,28 @@ import { useEffect, useState } from 'react';
 // ------------------------
 // all1. Callback luôn được gọi sau khi component mounted
 // all2. Cleanup function luôn được gọi trước khi component unmounted
-// all3. Cleanup function luôn được gọi trước khi xallback được gọi (trước component mounted)
+
+const tabs = ['posts', 'comments', 'albums'];
 
 function Content() {
-    const [avatar, setAvatar] = useState(undefined);
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
 
-    useEffect(() => {
-
-        //cleanup
-        return () => {
-            avatar && URL.revokeObjectURL(avatar.preview)
-        }
-    })
-
-    const handlePreviewAvatar = (e) => {
-        const file = e.target.files[0];
-
-        file.preview = URL.createObjectURL(file);
-        
-        setAvatar(file);
-
-        // e.target.value = null;
-        return () => {
-            //
-        }
+    const handleResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
     }
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, []);
 
     return (
         <div>
-            <input
-                type="file"
-                multiple
-                onChange={handlePreviewAvatar}
-            />
-
-            {avatar && (
-                <img
-                    src={avatar.preview}
-                    alt="preview avatar"
-                    width="200px"
-                />
-            )}
+            <h1>{`${width}x${height}`}</h1>
         </div>
     )
 }
