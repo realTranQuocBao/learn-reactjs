@@ -4,6 +4,8 @@ import ContentMemo from './ContentMemo';
 // 1. memo() ->higher Order Component (HOC)
 // 2. useCallback()
 
+// Function cômponent + memo = PureComponent
+
 // Hooks
 // HOC
 // Render props
