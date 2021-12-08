@@ -1,32 +1,30 @@
-import { useState, createContext } from 'react'
-import Block from "./Block";
-import './App.css'
+import { useRef } from 'react'
+import Video from './Video'
 
-// Context
-// CompA => CompB => CompC -> CompA => CompC
-
-// Theme: Dark / Light
-
-// 1. Create context
-// 2. Provider
-// 3. Consumer
-
-export const ThemeContext = createContext();
 
 function Content() {
-    const [theme, setTheme] = useState('light')
 
-    const toggleTheme = () => {
-        setTheme(theme === 'light' ? 'dark' : 'light');
+    const videoRef = useRef()
+
+
+    //console.log(videoRef.current);
+
+    const handlePlay = () => {
+        videoRef.current.play()
+    }
+    const handlePause = () => {
+        videoRef.current.pause()
     }
 
     return (
-        <ThemeContext.Provider value={theme}>
-            <div style={{ padding: 20 }}>
-                <button onClick={toggleTheme}>Toggle theme</button>
-                <Block />
-            </div>
-        </ThemeContext.Provider>
+        <div>
+            <h1>Bảo ciute</h1>
+            <Video ref={videoRef}/>
+            <br />
+            <button onClick={handlePlay}>Play</button>
+            <button onClick={handlePause}>Pause</button>
+        </div>
+
     )
 }
 
