@@ -43,7 +43,7 @@ function Content() {
             <h1>{count}</h1>
             <button
                 //onClick={() => setCount(count - 1)}
-                onClick={() => dispatch("DOWN_ACTION")}
+                onClick={() => dispatch(DOWN_ACTION)}
             >Down</button>
             <button
                 // onClick={() => setCount(count + 1)}
